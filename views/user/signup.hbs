@@ -1,0 +1,77 @@
+<div
+  class="container mt-5"
+  style="height: 50vh; display: flex; align-items: center;"
+>
+  <div class="col-md-6" style="margin: auto;">
+
+    <div class="card" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+
+      <div
+        class="card-header"
+        style="background-color: #28a745; color: #fff; text-align: center; padding: 10px;"
+      >
+        <h4>Create new Account</h4>
+      </div>
+
+      <div class="card-body" style="padding: 20px;">
+        <form action="/signup" method="post">
+
+          <div class="form-group" style="margin-bottom: 20px;">
+            <label for="firstName">First Name:</label>
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              class="form-control"
+              style="width: 100%;"
+              required
+            />
+          </div>
+
+          <div class="form-group" style="margin-bottom: 20px;">
+            <label for="lastName">Last Name:</label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              class="form-control"
+              style="width: 100%;"
+              required
+            />
+          </div>
+
+          <div class="form-group" style="margin-bottom: 20px;">
+            <label for="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="form-control"
+              style="width: 100%;"
+              required
+            />
+          </div>
+
+          <div class="form-group" style="margin-bottom: 20px;">
+            <label for="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="form-control"
+              style="width: 100%;"
+              required
+            />
+          </div>
+          <center>
+            <button
+              type="submit"
+              class="btn btn-success btn-block"
+              style="background-color: #28a745; border: none;"
+            >Sign Up</button>
+          </center>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

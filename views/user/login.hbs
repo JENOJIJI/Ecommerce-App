@@ -1,0 +1,62 @@
+<div
+  class="container mt-5"
+  style="height: 50vh width :60%; display: flex; align-items: center;"
+>
+  <div class="col-md-6" style="margin: auto;">
+
+    <div class="card" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+
+      <div
+        class="card-header"
+        style="background-color: #007bff; color: #fff; text-align: center; padding: 10px;"
+      >
+        <h4>Login</h4>
+      </div>
+
+      <div class="card-body" style="padding: 20px;">
+        <form action="/login" method="post">
+          {{#if LoginErr}}
+            <center>
+              <p class="error" style="font-size: small; color: crimson;">Invalid
+                username or password</p>
+            </center>
+          {{/if}}
+          <div class="form-group" style="margin-bottom: 20px;">
+            <label for="username">Email:</label>
+            <input
+              type="text"
+              id="username"
+              name="email"
+              class="form-control"
+              style="width: 100%;"
+              required
+            />
+          </div>
+
+          <div class="form-group" style="margin-bottom: 20px;">
+            <label for="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="form-control"
+              style="width: 100%;"
+              required
+            />
+          </div>
+
+          <div class="form-group" style="margin-bottom: 20px;">
+            <center>
+              <a href="/signup">Create new Account?</a></center>
+          </div>
+
+          <center><button
+              type="submit"
+              class="btn btn-primary btn-block"
+              style="background-color: #007bff; border: none;"
+            >Login</button></center>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
