@@ -2,7 +2,7 @@
   <div class="title">
     <h2>Product Order Form</h2>
   </div>
-  <form action="/place-order" method="post">
+  <form action="" id="checkout-form">
     <div class="d-flex">
       <div class="container">
         <label>
@@ -39,17 +39,20 @@
             <th colspan="2">Your order</th>
           </tr>
           <tr>
-            <td>Product Name x 2(Qty)</td>
-            <td>$88.00</td>
-          </tr>
-          <tr>
-            <td>Subtotal</td>
-            <td>$88.00</td>
+            <td>Items</td>
+            <td></td>
+            <td>{{totalItemsCount}}</td>
           </tr>
           <tr>
             <td>Shipping</td>
-            <td>Free shipping</td>
+            <td></td>
+            <td>Free </td>
           </tr>
+          <tr>
+            <td>Subtotal</td><td></td>
+            <td>{{totalPrice}}</td>
+          </tr>
+
         </table><br />
         <div>
           <input
@@ -84,7 +87,7 @@
           </span>
         </div>
         <br />
-        <button type="submit">Place Order</button>
+        <button type="submit">Checkout</button>
       </div>
     </div>
   </form>

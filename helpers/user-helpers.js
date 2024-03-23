@@ -50,12 +50,12 @@ module.exports = {
         .getdb()
         .collection(collections.CART_COLLECTION)
         .findOne({ user: new ObjectId(userId) });
-      console.log(userCart);
+
       if (userCart) {
         let productExist = userCart.products.findIndex(
           (product) => product.item == productId
         );
-        console.log(productExist);
+
         if (productExist != -1) {
           db.getdb()
             .collection(collections.CART_COLLECTION)
@@ -178,7 +178,7 @@ module.exports = {
             }
           )
           .then((response) => {
-            resolve(true);
+            resolve({ status: true });
           });
       }
     });
@@ -198,6 +198,54 @@ module.exports = {
         .then((response) => {
           resolve();
         });
+    });
+  },
+  getTotalPrice: (userId) => {
+    return new Promise(async (resolve, reject) => {
+      let total = await db
+        .getdb()
+        .collection(collections.CART_COLLECTION)
+        .aggregate([
+          {
+            $match: { user: new ObjectId(userId) },
+          },
+          {
+            $unwind: "$products",
+          },
+          {
+            $project: {
+              item: "$products.item",
+              quantity: "$products.quantity",
+            },
+          },
+          {
+            $lookup: {
+              from: collections.PRODUCT_COLLECTION,
+              localField: "item",
+              foreignField: "_id",
+              as: "product",
+            },
+          },
+          {
+            $project: {
+              item: 1,
+              quantity: 1,
+              product: { $arrayElemAt: ["$product", 0] },
+            },
+          },
+          {
+            $group: {
+              _id: null,
+              total: {
+                $sum: {
+                  $multiply: ["$quantity", { $toInt: "$product.price" }],
+                },
+              },
+            },
+          },
+        ])
+        .toArray();
+      resolve(total[0].total);
     });
   },
 };

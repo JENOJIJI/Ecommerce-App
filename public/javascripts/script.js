@@ -12,7 +12,7 @@ function addToCart(productId) {
   });
 }
 
-function changeQuantity(cartId, productId, count) {
+function changeQuantity(cartId, productId, userId, count) {
   quantity = parseInt(document.getElementById(productId).innerHTML);
   count = parseInt(count);
   $.ajax({
@@ -20,6 +20,7 @@ function changeQuantity(cartId, productId, count) {
     data: {
       cart: cartId,
       product: productId,
+      user: userId,
       count: count,
       quantity: quantity,
     },
@@ -29,7 +30,9 @@ function changeQuantity(cartId, productId, count) {
         alert("Product Removed from cart");
         location.reload();
       } else {
+        console.log(response);
         document.getElementById(productId).innerHTML = quantity + count;
+        document.getElementById("total").innerHTML = response.totalPrice;
       }
     },
   });

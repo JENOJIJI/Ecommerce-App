@@ -14,7 +14,7 @@
                     class="d-flex justify-content-between align-items-center mb-5"
                   >
                     <h1 class="fw-bold mb-0 text-black">Shopping Cart</h1>
-                    <h6 class="mb-0 text-muted">3 items</h6>
+                    <h6 class="mb-0 text-muted">{{totalItemsCount}} items</h6>
                   </div>
                   <div class="container">
                     <table class="table">
@@ -52,14 +52,14 @@
                                 style="margin-top: 20px;font-size: x-large;"
                               ><button
                                   class="cart-item-count mr-3"
-                                  onclick="changeQuantity('{{this._id}}','{{this.product._id}}',-1)"
+                                  onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user}}',-1)"
                                 >-</button>
                                 &nbsp;&nbsp;<span id="{{this.product._id}}">
                                   {{this.quantity}}</span>
                                 &nbsp;
                                 <button
                                   class="cart-item-count ml-3"
-                                  onclick="changeQuantity('{{this._id}}','{{this.product._id}}',1)"
+                                  onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user}}',1)"
                                 >+</button></div></td>
                             <td>
                               <a
@@ -91,7 +91,7 @@
 
                   <div class="d-flex justify-content-between mb-5">
                     <h5 class="text-uppercase">Total price</h5>
-                    <h5>€ 137.00</h5>
+                    <h5>Rs.<span id="total">{{totalPrice}}</span></h5>
                   </div>
                   <center>
                     <a
