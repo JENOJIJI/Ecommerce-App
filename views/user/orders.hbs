@@ -1,0 +1,70 @@
+<section class="h-100 gradient-custom">
+  <div class="container py-5 h-25">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-10 col-xl-8">
+        <div class="card" style="border-radius: 10px;">
+          <div class="card-header px-4 py-5">
+            <center>
+              <h5 class="text-muted mb-0">Thanks for your Order,
+                <span
+                  style="color: #a8729a;"
+                >{{user.firstName}}</span>!</h5></center>
+          </div>
+          <div class="card-body p-4">
+            {{#each orders}}
+              <div class="card shadow-0 border mb-4">
+
+                <div class="card-body">
+
+                  <div class="row">
+                    <div class="col-md-2">
+                      <h6>{{this.date}}</h6>
+                    </div>
+                    <div
+                      class="col-md-2 text-center d-flex justify-content-center align-items-center"
+                    >
+                      <h6 class="mb-0">{{this.deliveryDetails.name}}</h6>
+                    </div>
+                    <div
+                      class="col-md-2 text-center d-flex justify-content-center align-items-center"
+                    >
+                      <h6 class="mb-0">Rs.{{this.totalAmount}}</h6>
+                    </div>
+                    <div
+                      class="col-md-2 text-center d-flex justify-content-center align-items-center"
+                    >
+                      <h6 class="mb-0">{{this.paymentMethod}}</h6>
+                    </div>
+                    <div
+                      class="col-md-2 text-center d-flex justify-content-center align-items-center"
+                    >
+                      <h6 class="mb-0">{{this.deliveryDetails.pincode}}</h6>
+                    </div>
+                    <div
+                      class="col-md-2 text-center d-flex justify-content-center align-items-center"
+                    >
+                      <h6 class="mb-0">{{this.status}}</h6>
+                    </div>
+
+                  </div>
+
+                  <hr
+                    class="mb-4"
+                    style="background-color: #e0e0e0; opacity: 1;"
+                  />
+                  <div>
+                    <a
+                      href="/view-order-products/{{this._id}}"
+                      class="btn btn-primary"
+                      style="width: 100%; height: auto;"
+                    >View Ordered Products</a>
+                  </div>
+                </div></div>
+            {{/each}}
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -2,7 +2,7 @@
   <div class="title">
     <h2>Product Order Form</h2>
   </div>
-  <form action="" id="checkout-form">
+  <form id="checkout-form">
     <div class="d-flex">
       <div class="container">
         <label>
@@ -19,19 +19,24 @@
             required
           />
         </label>
+        <label>
+          <span>State <span class="required">*</span></span>
+          <input type="text" name="state" class="form-control" />
+        </label>
 
         <label>
-          <span>State / County <span class="required">*</span></span>
-          <input type="text" name="city" class="form-control" />
+          <span>County <span class="required">*</span></span>
+          <input type="text" name="country" class="form-control" />
         </label>
         <label>
-          <span>Postcode / ZIP <span class="required">*</span></span>
-          <input type="text" name="city" class="form-control" />
+          <span>Pincode <span class="required">*</span></span>
+          <input type="text" name="pincode" class="form-control" />
         </label>
         <label>
           <span>Phone <span class="required">*</span></span>
-          <input type="tel" name="city" class="form-control" />
+          <input type="tel" name="phone" class="form-control" />
         </label>
+        <input type="text" name="userId" value="{{user._id}}" hidden />
       </div>
       <div class="Yorder">
         <table>
@@ -64,17 +69,6 @@
           Cash on Delivery
         </div>
         <br />
-        <div>
-          <input type="radio" name="paymentMode" value="bankTransfer" />
-          Direct Bank Transfer
-        </div>
-        <p>
-          Make your payment directly into our bank account. Please use your
-          Order ID as the payment reference. Your order will not be shipped
-          until the funds have cleared in our account.
-        </p>
-        <br />
-
         <div>
           <input type="radio" name="paymentMode" value="payPal" />
           Paypal

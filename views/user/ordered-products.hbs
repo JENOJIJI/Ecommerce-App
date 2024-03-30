@@ -1,0 +1,112 @@
+<section class="h-100 gradient-custom">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-25">
+      <div class="col-lg-10 col-xl-8">
+        <div class="card" style="border-radius: 10px;">
+          <div class="card-header px-4 py-5">
+            <center>
+              <h5 class="text-muted mb-0">Ordered Items</h5></center>
+          </div>
+          <div class="card-body p-4">
+            {{#each products}}
+              <div class="card shadow-0 border mb-4">
+
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <img
+                        src="/product-images/{{this.item}}.jpg"
+                        class="img-fluid"
+                        alt="Phone"
+                      />
+                    </div>
+                    <div
+                      class="col-md-2 text-center d-flex justify-content-center align-items-center"
+                    >
+                      <p
+                        class="text-muted mb-0"
+                      >{{this.product.product_name}}</p>
+                    </div>
+                    <div
+                      class="col-md-2 text-center d-flex justify-content-center align-items-center"
+                    >
+                      <p
+                        class="text-muted mb-0 small"
+                      >{{this.product.category}}</p>
+                    </div>
+                    <div
+                      class="col-md-2 text-center d-flex justify-content-center align-items-center"
+                    >
+                      <p
+                        class="text-muted mb-0 small"
+                      >{{this.product.description}}</p>
+                    </div>
+                    <div
+                      class="col-md-2 text-center d-flex justify-content-center align-items-center"
+                    >
+                      <p class="text-muted mb-0 small">Qty:
+                        {{this.quantity}}</p>
+                    </div>
+                    <div
+                      class="col-md-2 text-center d-flex justify-content-center align-items-center"
+                    >
+                      <p
+                        class="text-muted mb-0 small"
+                      >Rs.{{this.product.price}}</p>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            {{/each}}
+            <div class="d-flex justify-content-between pt-2">
+              <p class="fw-bold mb-0">Address Details</p>
+              
+            </div>
+
+            <div class="d-flex justify-content-between pt-2">
+              <p class="text-muted mb-0"><span
+                  class="fw-bold me-4"
+                >{{orderDetails.deliveryDetails.address}}</span></p>
+              <p class="text-muted mb-0"><span
+                  class="fw-bold me-4"
+                >{{orderDetails.paymentMethod}}</span></p>
+            </div>
+
+            <div class="d-flex justify-content-between">
+              <p class="text-muted mb-0"><span
+                  class="fw-bold me-4"
+                >{{orderDetails.deliveryDetails.mobile}}</span></p>
+              <p class="text-muted mb-0"><span
+                  class="fw-bold me-4"
+                >{{orderDetails.date}}</span>
+              </p>
+            </div>
+
+            <div class="d-flex justify-content-between mb-5">
+              <p class="text-muted mb-0"><span
+                  class="fw-bold me-4"
+                >{{orderDetails.deliveryDetails.pincode}}</span></p>
+              <p class="text-muted mb-0"><span
+                  class="fw-bold me-4"
+                >{{orderDetails.status}}</span>
+              </p>
+            </div>
+          </div>
+          <div
+            class="card-footer border-0 px-4 py-5"
+            style="background-color: #a8729a; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;"
+          >
+            <h5
+              class="d-flex align-items-center justify-content-center text-white mb-0"
+            >Total Paid:
+              <span
+                class="h2 mb-0 ms-2"
+              >Rs.{{orderDetails.totalAmount}}</span></h5>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

@@ -62,10 +62,18 @@ router.get("/logout", function (req, res, next) {
 });
 
 router.get("/cart", verifyLogin, async function (req, res) {
-  let totalPrice = await userHelper.getTotalPrice(req.session.user._id);
+  let totalPrice = 0;
+  totalPrice = await userHelper.getTotalPrice(req.session.user._id);
+  if (totalPrice.length <= 0) {
+    totalPrice = 0;
+  } else {
+    totalPrice = totalPrice[0].total;
+  }
+  console.log(totalPrice);
   let totalItemsCount = await userHelper.getCartCount(req.session.user._id);
   let products = await userHelper.getCartProducts(req.session.user._id);
-  let user = req.session.user._id;
+  let user = req.session.user;
+
   res.render("user/cart", { products, user, totalPrice, totalItemsCount });
 });
 
@@ -91,11 +99,36 @@ router.post("/remove-cart-item", function (req, res, next) {
 router.get("/place-order", verifyLogin, async function (req, res, next) {
   let totalPrice = await userHelper.getTotalPrice(req.session.user._id);
   let totalItemsCount = await userHelper.getCartCount(req.session.user._id);
-  res.render("user/place-order", { totalItemsCount, totalPrice });
-});
-router.post("/place-order", function (req, res, next) {
-  console.log(req.body);
-  res.render("user/place-order");
+  res.render("user/place-order", {
+    totalItemsCount,
+    totalPrice,
+    user: req.session.user,
+  });
 });
 
+router.post("/place-order", async function (req, res, next) {
+  let products = await userHelper.getCartProductList(req.body.userId);
+  let totalPrice = await userHelper.getTotalPrice(req.body.userId);
+  userHelper.placeOrder(req.body, products, totalPrice).then((response) => {
+    res.json({ status: true });
+  });
+});
+
+router.get("/order-success", function (req, res, next) {
+  res.render("user/order-success");
+});
+
+router.get("/orders", verifyLogin, async function (req, res, next) {
+  let orders = await userHelper.getOrderDetails(req.session.user._id);
+  console.log(orders);
+  res.render("user/orders", { user: req.session.user, orders });
+});
+
+router.get("/view-order-products/:id", async function (req, res, next) {
+  let products = await userHelper.getOrderedProducts(req.params.id);
+
+  let orderDetails = await userHelper.getSpecificOrderDetails(req.params.id);
+  console.log(orderDetails);
+  res.render("user/ordered-products", { user: req.session.user, products,orderDetails });
+});
 module.exports = router;

@@ -51,3 +51,26 @@ function removeItem(cartId, productId) {
     },
   });
 }
+
+$(document).ready(function () {
+  $("#checkout-form").submit(function (event) {
+    event.preventDefault();
+
+    var formData = $(this).serialize();
+
+    $.ajax({
+      type: "POST",
+      url: "/place-order", // URL to your Express route
+      data: formData,
+      success: function (response) {
+        // Handle success response
+        location.href = "/order-success";
+        // Optionally, perform actions like showing a success message
+      },
+      error: function (xhr, status, error) {
+        // Handle error
+        console.error(error);
+      },
+    });
+  });
+});

@@ -13,6 +13,7 @@ module.exports = {
   getAllProducts: () => {
     return new Promise(async (resolve, reject) => {
       let products = await db.getdb().collection("products").find().toArray();
+
       resolve(products);
     });
   },

@@ -52,14 +52,14 @@
                                 style="margin-top: 20px;font-size: x-large;"
                               ><button
                                   class="cart-item-count mr-3"
-                                  onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user}}',-1)"
+                                  onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user._id}}',-1)"
                                 >-</button>
                                 &nbsp;&nbsp;<span id="{{this.product._id}}">
                                   {{this.quantity}}</span>
                                 &nbsp;
                                 <button
                                   class="cart-item-count ml-3"
-                                  onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user}}',1)"
+                                  onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user._id}}',1)"
                                 >+</button></div></td>
                             <td>
                               <a

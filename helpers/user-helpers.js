@@ -2,6 +2,7 @@ var db = require("../config/connection");
 var collections = require("../config/collections");
 const bcrypt = require("bcrypt");
 const { ObjectId } = require("mongodb");
+const { resolve, reject } = require("promise");
 module.exports = {
   doSignup: (userData) => {
     return new Promise(async (resolve, reject) => {
@@ -245,7 +246,126 @@ module.exports = {
           },
         ])
         .toArray();
-      resolve(total[0].total);
+      console.log(total);
+      resolve(total);
+    });
+  },
+  placeOrder: (order, products, totalPrice) => {
+    console.log("**********");
+    console.log(totalPrice[0].total);
+    return new Promise((resolve, reject) => {
+      let status =
+        order.paymentMode === "cashOnDelivery" ? "placed" : "pending";
+      let orderObject = {
+        deliveryDetails: {
+          name: order.name,
+          address: order.houseadd,
+          state: order.state,
+          country: order.country,
+          mobile: order.phone,
+          pincode: order.pincode,
+        },
+        userId: new ObjectId(order.userId),
+        paymentMethod: order.paymentMode,
+        totalAmount: totalPrice[0].total,
+        products: products,
+        date: new Date().toDateString(),
+        status: status,
+      };
+      db.getdb()
+        .collection(collections.ORDER_COLLECTION)
+        .insertOne(orderObject)
+        .then((response) => {
+          db.getdb()
+            .collection(collections.CART_COLLECTION)
+            .deleteOne({ user: new ObjectId(order.userId) })
+            .then((response) => {
+              resolve(true);
+            });
+        });
+    });
+  },
+  getCartProductList: (userId) => {
+    return new Promise(async (resolve, reject) => {
+      let cart = await db
+        .getdb()
+        .collection(collections.CART_COLLECTION)
+        .findOne({ user: new ObjectId(userId) });
+
+      resolve(cart.products);
+    });
+  },
+  getOrderDetails: (userId) => {
+    console.log(userId);
+    return new Promise(async (resolve, reject) => {
+      let orders = await db
+        .getdb()
+        .collection(collections.ORDER_COLLECTION)
+        .find({ userId: new ObjectId(userId) })
+        .toArray();
+
+      resolve(orders);
+    });
+  },
+  getOrderedProducts: (orderId) => {
+    return new Promise(async (resolve, reject) => {
+      let orderedItems = await db
+        .getdb()
+        .collection(collections.ORDER_COLLECTION)
+        .aggregate([
+          {
+            $match: { _id: new ObjectId(orderId) },
+          },
+          {
+            $unwind: "$products",
+          },
+          {
+            $project: {
+              item: "$products.item",
+              quantity: "$products.quantity",
+            },
+          },
+          {
+            $lookup: {
+              from: collections.PRODUCT_COLLECTION,
+              localField: "item",
+              foreignField: "_id",
+              as: "product",
+            },
+          },
+          {
+            $project: {
+              item: 1,
+              quantity: 1,
+              product: { $arrayElemAt: ["$product", 0] },
+            },
+          },
+        ])
+        .toArray();
+      console.log(orderedItems);
+      resolve(orderedItems);
+    });
+  },
+  getSpecificOrderDetails: (cartId) => {
+    return new Promise(async (resolve, reject) => {
+      let orders = await db
+        .getdb()
+        .collection(collections.ORDER_COLLECTION)
+        .findOne(
+          { _id: new ObjectId(cartId) },
+          {
+            _id: 1,
+            deliveryDetails: 1,
+            totalAmount: 1,
+            paymentMethod: 1,
+            date: 1,
+            status: 1,
+            products:0,
+            userId:0,
+          }
+        );
+
+      resolve(orders);
     });
   },
 };
